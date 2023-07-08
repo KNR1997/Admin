@@ -16,6 +16,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Jobs from "./scenes/jobs";
+import Companies from "./scenes/companies";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -42,6 +43,7 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
               <Route path="/jobs" element={<Jobs />} />
+              <Route path="/companies" element={<Companies />} />
             </Routes>
           </main>
         </div>

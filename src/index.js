@@ -6,10 +6,12 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import jobReducer from "./store/jobState";
+import companyReducer from "./store/companyState";
 
 const store = configureStore({
   reducer: {
-    job: jobReducer
+    job: jobReducer,
+    company: companyReducer
   }
 });
 

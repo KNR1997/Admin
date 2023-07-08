@@ -17,6 +17,7 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import WorkIcon from '@mui/icons-material/Work';
+import BusinessIcon from '@mui/icons-material/Business';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -133,6 +134,13 @@ const Sidebar = () => {
             >
               Data
             </Typography>
+            <Item
+              title="Companies"
+              to="/companies"
+              icon={<BusinessIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Jobs"
               to="/jobs"
