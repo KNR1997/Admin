@@ -7,19 +7,28 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import jobReducer from "./store/jobState";
 import companyReducer from "./store/companyState";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const store = configureStore({
   reducer: {
     job: jobReducer,
-    company: companyReducer
-  }
+    company: companyReducer,
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Auth0Provider
+      domain="dev-el3ibbyj70unvguf.us.auth0.com"
+      clientId="qdVB0ZnEC1XmkM4lZ3RY7wIBsm3FKecn"
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Auth0Provider>
   </Provider>
 );
