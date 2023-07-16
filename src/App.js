@@ -17,6 +17,7 @@ import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Jobs from "./scenes/jobs";
 import Companies from "./scenes/companies";
+import UserDashboard from "./scenes/userDashboard";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -44,6 +45,7 @@ function App() {
               <Route path="/geography" element={<Geography />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/companies" element={<Companies />} />
+              <Route path="/userDashboard" element={<UserDashboard />} />
             </Routes>
           </main>
         </div>

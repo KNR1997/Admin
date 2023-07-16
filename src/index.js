@@ -8,11 +8,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import jobReducer from "./store/jobState";
 import companyReducer from "./store/companyState";
 import { Auth0Provider } from "@auth0/auth0-react";
+import userReducer from "./store/userState";
 
 const store = configureStore({
   reducer: {
     job: jobReducer,
     company: companyReducer,
+    user: userReducer
   },
 });
 
