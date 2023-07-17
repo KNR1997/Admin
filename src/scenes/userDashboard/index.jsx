@@ -35,20 +35,17 @@ const UserDashboard = () => {
       const formData = new FormData();
       formData.append('id', user.sub);
       formData.append('file' , file);
-      const timeout = setTimeout(() => {
-        setData(null)
-      });
+
       
       axios.post('http://localhost:8080/api/file/uploadFile', formData)
         .then(response => {
           console.log(response);
           setData(response.data);
-          timeout();
         })
         .catch(error => {
           console.log(error);
         });
-
+        setData(null);
     }
   }, [file]);
 
@@ -67,6 +64,17 @@ const UserDashboard = () => {
 
   if (isLoading) {
     return <div>Loading ...</div>;
+  }
+
+  const deleteFile = (fileId) => {
+    axios.delete(`http://localhost:8080/api/user/deleteFile/${fileId}`)
+    .then(response => {
+      setData(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    setData(null);
   }
 
   return (
@@ -273,7 +281,7 @@ const UserDashboard = () => {
                 </Button>
               </Box>
               <IconButton>
-                <DeleteIcon />
+                <DeleteIcon onClick={() => deleteFile(file.fileID)}/>
               </IconButton>
             </Box>
           ))}
