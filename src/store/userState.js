@@ -1,39 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const fetchFromLocalStorage = () => {
-    let cv = localStorage.getItem("cv");
-    if (cv) {
-      return JSON.parse(localStorage.getItem("cv"));
-    } else {
-      return [];
+export const getUserFiles = createAsyncThunk(
+    'user/getFiles',
+    async (userId) => {
+        const response = await fetch(`http://localhost:8080/api/user/getFiles/${userId}`);
+        const formattedResponse = await response.json();
+        return formattedResponse;
     }
-};
-  
-const storeInLocalStorage = (data) => {
-    localStorage.setItem("cv", JSON.stringify(data));
-};
+);
 
-const initialState = {
-    files: fetchFromLocalStorage()
-};
-
-const userSlice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {
-        addToFiles: (state, action) => {
-            const isFileInCart = state.carts.find(
-                (file) => file.fileID === action.payload.fileID
-            );
-
-            if (isFileInCart) {
-
-            } else {
-                state.files.push(action.payload);
-                storeInLocalStorage(state.files);
-            }
+export const userSlice = createSlice({
+    name: 'user',
+    initialState: {
+        files: [],
+        isLoading: false,
+    },
+    extraReducers: {
+        [getUserFiles.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [getUserFiles.fulfilled]: (state, action) => {
+            state.files = action.payload;
+            state.isLoading = false;
+        },
+        [getUserFiles.rejected]: (state) => {
+            state.isLoading = false;
         }
     }
 });
+  
 
 export default userSlice.reducer;

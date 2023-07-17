@@ -1,6 +1,5 @@
 import { Box, Button, IconButton, Typography, appBarClasses, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
@@ -18,30 +17,44 @@ import "./userDashboard.css";
 import { useEffect, useRef, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import { getUserFiles } from "../../store/userState";
 
 const UserDashboard = () => {
+  const dispatch = useDispatch();
+  const files = useSelector(state => state.user.files);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const ref = useRef();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [file, setFile] = useState();
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     if (file) {
       const formData = new FormData();
       formData.append('id', user.sub);
       formData.append('file' , file);
-      console.log("form data sent");
+      const timeout = setTimeout(() => {
+        setData(null)
+      });
       
       axios.post('http://localhost:8080/api/file/uploadFile', formData)
         .then(response => {
           console.log(response);
+          setData(response.data);
+          timeout();
         })
         .catch(error => {
           console.log(error);
-        })
+        });
+
     }
   }, [file]);
+
+  useEffect(() => {
+    dispatch(getUserFiles(user.sub));
+  }, [data]);
 
   const openFileUpload = (e) => {
     ref.current.click();
@@ -224,9 +237,9 @@ const UserDashboard = () => {
               Recent CVs Uploaded
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
+          {files.map((file, i) => (
             <Box
-              key={`${transaction.txId}-${i}`}
+              key={i}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -239,13 +252,13 @@ const UserDashboard = () => {
                   variant="h5"
                   fontWeight="600"
                 >
-                  {transaction.txId}
+                  {file.fileID}
                 </Typography>
                 <Typography color={colors.grey[100]}>
-                  {transaction.user}
+                  {file.name}
                 </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
+              {/* <Box color={colors.grey[100]}>{transaction.date}</Box> */}
               <Box>
                 <Button
                   sx={{
