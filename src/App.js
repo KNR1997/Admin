@@ -18,6 +18,7 @@ import Calendar from "./scenes/calendar/calendar";
 import Jobs from "./scenes/jobs";
 import Companies from "./scenes/companies";
 import UserDashboard from "./scenes/userDashboard";
+import JobForm from "./scenes/jobs/form";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -46,6 +47,7 @@ function App() {
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/userDashboard" element={<UserDashboard />} />
+              <Route path="/jobForm" element={<JobForm />} />
             </Routes>
           </main>
         </div>

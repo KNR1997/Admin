@@ -35,7 +35,6 @@ const UserDashboard = () => {
       const formData = new FormData();
       formData.append('id', user.sub);
       formData.append('file' , file);
-
       
       axios.post('http://localhost:8080/api/file/uploadFile', formData)
         .then(response => {

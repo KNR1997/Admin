@@ -50,6 +50,7 @@ const Jobs = () => {
       <Header
         title="JOBS"
         subtitle="List of Jobs currently available"
+        button="+ New"
       />
       <Box
         m="40px 0 0 0"
